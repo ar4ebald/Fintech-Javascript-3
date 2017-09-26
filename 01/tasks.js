@@ -75,14 +75,21 @@ fibonacciWithCache.cache = [0, 1];
  * @return {string}
  */
 function printNumbers(max, cols) {
+  const range = count => Array.from(Array(count).keys());
+
   const cells = max + 1;
   const rows = Math.ceil(cells / cols);
+  let last = cells % cols;
 
-  return [...Array(rows).keys()].map(
-    i => [...Array(Math.ceil((cells - i) / rows)).keys()].map(
-      j => (i + j * rows).toString().padStart(2)
+  if (!last) {
+    last = cols - 1;
+  }
+
+  return range(rows).map(
+    i => range(cols).map(
+      j => (Math.min(last, j) * rows + Math.max(0, j - last) * (rows - 1) + i).toString().padStart(2)
     ).join(' ')
-  ).join('\n');
+  ).join('\n').slice(0, (cells % cols) ? -(rows * cols - cells) * 3 : Infinity);
 }
 /* ============================================= */
 

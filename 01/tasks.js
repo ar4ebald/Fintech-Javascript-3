@@ -75,22 +75,32 @@ fibonacciWithCache.cache = [0, 1];
  * @return {string}
  */
 function printNumbers(max, cols) {
-  const range = count => Array.from(Array(count).keys());
+  function* range(count, transform) {
+    for (let i = 0; i < count; ++i) {
+      yield transform(i);
+    }
+  }
 
   const cells = max + 1;
   const rows = Math.ceil(cells / cols);
-  let last = cells % cols;
+  const threshold = (cells % cols) || (cols - 1);
 
-  if (!last) {
-    last = cols - 1;
+  function getNumberAt(row, col) {
+    const beforeThreshold = Math.min(threshold, col);
+    const afterThreshold = Math.max(0, col - threshold);
+
+    return row + beforeThreshold * rows + afterThreshold * (rows - 1);
   }
 
-  return range(rows).map(
-    i => range(cols).map(
-      j => (Math.min(last, j) * rows + Math.max(0, j - last) * (rows - 1) + i).toString().padStart(2)
-    ).join(' ')
-  ).join('\n').slice(0, (cells % cols) ? -(rows * cols - cells) * 3 : Infinity);
+  return Array.from(range(
+    rows,
+    row => Array.from(range(
+      Math.min(row * cols + cols, cells) - row * cols,
+      col => getNumberAt(row, col).toString().padStart(2)
+    )).join(' ')
+  )).join('\n');
 }
+
 /* ============================================= */
 
 /**

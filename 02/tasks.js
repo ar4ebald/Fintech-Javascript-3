@@ -4,8 +4,10 @@
  */
 function timer(logger = console.log) {
   for (var i = 0; i < 10; i++) {
+    const local = i;
+
     setTimeout(() => {
-      logger(i);
+      logger(local);
     }, 100);
   }
 }
@@ -20,7 +22,9 @@ function timer(logger = console.log) {
  * @return {Function} функция с нужным контекстом
  */
 function customBind(func, context, ...args) {
-
+  return function(...restArgs) {
+    return func.apply(context, args.concat(restArgs));
+  };
 }
 
 /*= ============================================ */
@@ -33,7 +37,17 @@ function customBind(func, context, ...args) {
  * sum :: void -> Number
  */
 function sum(x) {
-  return 0;
+  let accum = Number(this);
+
+  if (isNaN(accum)) {
+    accum = 0;
+  }
+
+  if (arguments.length) {
+    return sum.bind(accum + x);
+  }
+
+  return accum;
 }
 
 /*= ============================================ */
@@ -45,7 +59,9 @@ function sum(x) {
  * @return {boolean}
  */
 function anagram(first, second) {
-  return false;
+  const normalize = s => Array.from(s || '').sort().join('');
+
+  return normalize(first) === normalize(second);
 }
 
 /*= ============================================ */
@@ -57,7 +73,7 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  return [];
+  return Array.from(new Set(arr || [])).sort((x, y) => x - y);
 }
 
 /**
@@ -67,7 +83,9 @@ function getUnique(arr) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getIntersection(first, second) {
-  return [];
+  const set = new Set(first || []);
+
+  return getUnique((second || []).filter(x => set.has(x)));
 }
 
 /* ============================================= */
@@ -86,7 +104,19 @@ function getIntersection(first, second) {
  * @return {boolean}
  */
 function isIsomorphic(left, right) {
+  if (left.length !== right.length) {
+    return false;
+  }
 
+  let distance = 0;
+
+  for (let i = 0; i < left.length; ++i) {
+    if (left[i] !== right[i]) {
+      distance += 1;
+    }
+  }
+
+  return distance <= 1;
 }
 
 module.exports = {

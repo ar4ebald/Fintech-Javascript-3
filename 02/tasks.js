@@ -3,7 +3,7 @@
  * Доп. задание: предложите несколько вариантов решения.
  */
 function timer(logger = console.log) {
-  for (var i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     setTimeout(() => {
       logger(i);
     }, 100);
@@ -20,7 +20,9 @@ function timer(logger = console.log) {
  * @return {Function} функция с нужным контекстом
  */
 function customBind(func, context, ...args) {
-
+  return function(...otherArgs) {
+    return func.apply(context, args.concat(otherArgs));
+  };
 }
 
 /*= ============================================ */
@@ -33,6 +35,12 @@ function customBind(func, context, ...args) {
  * sum :: void -> Number
  */
 function sum(x) {
+  if (arguments.length) {
+    return function(y) {
+      return arguments.length ? sum(x + y) : x;
+    };
+  }
+
   return 0;
 }
 
@@ -45,7 +53,11 @@ function sum(x) {
  * @return {boolean}
  */
 function anagram(first, second) {
-  return false;
+  function normalize(s) {
+    return Array.from(s).sort().join('');
+  }
+
+  return normalize(first) === normalize(second);
 }
 
 /*= ============================================ */
@@ -57,7 +69,7 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  return [];
+  return Array.from(new Set(arr)).sort((x, y) => x - y);
 }
 
 /**
@@ -67,7 +79,9 @@ function getUnique(arr) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getIntersection(first, second) {
-  return [];
+  const set = new Set(first);
+
+  return getUnique(second.filter(x => set.has(x)));
 }
 
 /* ============================================= */
@@ -86,7 +100,19 @@ function getIntersection(first, second) {
  * @return {boolean}
  */
 function isIsomorphic(left, right) {
+  if (left.length !== right.length) {
+    return false;
+  }
 
+  let distance = 0;
+
+  for (let i = 0; i < left.length; ++i) {
+    if (left[i] !== right[i]) {
+      distance += 1;
+    }
+  }
+
+  return distance <= 1;
 }
 
 module.exports = {

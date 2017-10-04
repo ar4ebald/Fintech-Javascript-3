@@ -10,6 +10,19 @@ function timer(logger = console.log) {
   }
 }
 
+/**
+ * Доп. вариант
+ */
+// function timer(logger = console.log) {
+//   for (var i = 0; i < 10; i++) {
+//     (function(x) {
+//       setTimeout(() => {
+//         logger(x);
+//       }, 100);
+//     }(i));
+//   }
+// }
+
 /*= ============================================ */
 
 /**
@@ -104,15 +117,19 @@ function isIsomorphic(left, right) {
     return false;
   }
 
-  let distance = 0;
+  let hasDifferentChar = false;
 
   for (let i = 0; i < left.length; ++i) {
     if (left[i] !== right[i]) {
-      distance += 1;
+      if (hasDifferentChar) {
+        return false;
+      }
+
+      hasDifferentChar = true;
     }
   }
 
-  return distance <= 1;
+  return true;
 }
 
 module.exports = {

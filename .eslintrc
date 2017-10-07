@@ -30,7 +30,7 @@
         "SwitchCase": 1
       }
     ],
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": 0,
     "no-restricted-imports": [1,  "lodash", "crypto", "bluebird", "setimmediate2"],
     "no-var": 2,
     "no-loop-func": 1,
@@ -189,7 +189,7 @@
     "import/default": 2,
     "import/prefer-default-export": 1,
     "import/newline-after-import": 0, // включить, как починят баг
-    "import/unambiguous": 1,
+    "import/unambiguous": 0,
     "import/no-webpack-loader-syntax": 1,
     "import/extensions": [1, "always", {
       "js": "never"

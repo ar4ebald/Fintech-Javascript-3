@@ -7,37 +7,20 @@
  * Подсказка - необходимо использовать Proxy - объекты
  * */
 
-// State machine definition. '_' is for any other character
-// Numbers are used like terminal states
-const states = {
-  M: 1000,
-  C: { M: 900, D: 400, _: 100 },
-  D: 500,
-  X: { C: 90, L: 40, _: 10 },
-  L: 50,
-  I: { X: 9, V: 4, _: 1 },
-  V: 5,
-  _: 0
+const digits = {
+  I: 1, IV: 4, V: 5, IX: 9, X: 10, XL: 40, L: 50, XC: 90, C: 100, CD: 400, D: 500, CM: 900, M: 1000
 };
 
 function parseRoman(str) {
-  let number = 0;
+  const number = str
+    .match(/(IV|IX|XL|XC|CD|CM|.)/gi)
+    .reduce((sum, match) => sum + digits[match], 0);
 
-  for (let i = 0; i < str.length;) {
-    let state = states;
-
-    while (isNaN(state)) {
-      state = state[str[i]] ? state[str[i++]] : state._;
-    }
-
-    if (state === 0) {
-      return null; // Stop on invalid roman character
-    }
-
-    number += state;
+  if (isNaN(number)) {
+    return undefined;
   }
 
-  const result = [];
+  const result = new Array(number);
 
   for (let i = 0; i < number; ++i) {
     result[i] = i;

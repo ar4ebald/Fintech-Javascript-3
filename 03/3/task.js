@@ -7,14 +7,16 @@
  */
 function promiseAll(promises) {
   return new Promise((resolve, reject) => {
-    const resolveValues = [];
-    let resolveCount = 0;
+    const resolvedValues = [];
+    let resolvedCount = 0;
 
     for (let i = 0; i < promises.length; ++i) {
       promises[i].then(result => {
-        resolveValues[i] = result;
-        if (++resolveCount === promises.length) {
-          resolve(resolveValues);
+        resolvedValues[i] = result;
+        resolvedCount += 1;
+
+        if (resolvedCount === promises.length) {
+          resolve(resolvedValues);
         }
       }, reject);
     }

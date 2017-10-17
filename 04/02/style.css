@@ -1,0 +1,78 @@
+html {
+  font: 20px Andale Mono, monospace;
+}
+
+.container {
+  box-shadow: 0 0 100px #888;
+  padding: 20px;
+  margin: 50px auto;
+  max-width: 800px;
+}
+
+.products-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.products-table thead {
+  background: whitesmoke;
+  border-bottom: 3px solid black;
+}
+
+.products-table th {
+  width: 20%;
+}
+
+.products-table td {
+  width: 20%;
+  padding: 5px;
+  text-align: center;
+}
+
+.products-table tbody tr:nth-child(odd) {
+  background: lightgray;
+}
+
+.products-table tbody tr:hover {
+  background: darkgray;
+}
+
+.products-table td:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.piggy-table {
+  margin: 0 auto;
+  border-spacing: 8px;
+}
+
+.piggy-table td {
+  padding: 8px;
+}
+
+.piggy-table td:nth-child(1) {
+  background: #3ec082;
+}
+
+.piggy-table td:nth-child(2) {
+  background: #30d09a;
+}
+
+.piggy-table td:nth-child(3) {
+  background: #2edac3;
+}
+
+.piggy-table td:nth-child(4) {
+  background: #2be6e6;
+}
+
+.piggy-table td:nth-child(5) {
+  background: #2acef1;
+}
+
+.piggy-table td:nth-child(6) {
+  background: #25abfc;
+}

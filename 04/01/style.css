@@ -1,0 +1,33 @@
+html {
+  font: 20px Andale Mono, monospace;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
+  margin: 0 auto;
+  text-shadow: 0.05em 0.05em gray;
+}
+
+p {
+  font-size: 1.2em;
+  color: lightslategray;
+}
+
+img {
+  margin: 0 10%;
+  width: 80%;
+}
+
+ul {
+  list-style-image: url('checked.png');
+}
+
+li {
+  padding: 4px;
+}

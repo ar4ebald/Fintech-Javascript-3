@@ -6,7 +6,21 @@
  * @return {Promise}
  */
 function promiseAll(promises) {
-  return Promise.resolve(null);
+  return new Promise((resolve, reject) => {
+    const resolvedValues = [];
+    let resolvedCount = 0;
+
+    for (let i = 0; i < promises.length; ++i) {
+      promises[i].then(result => {
+        resolvedValues[i] = result;
+        resolvedCount += 1;
+
+        if (resolvedCount === promises.length) {
+          resolve(resolvedValues);
+        }
+      }, reject);
+    }
+  });
 }
 
 module.exports = promiseAll;
